@@ -1,0 +1,23 @@
+import Image from 'next/image';
+import Link from 'next/link';
+import React from 'react'
+
+const Footer = () => {
+  return (
+    <footer className=' wrapper flex flex-col flex-between 
+        items-center px-5 w-full py-5 sm:flex-row bg-grey-50 border-t border-t-slate-700' 
+    >
+      <Link href='/'>
+        <Image 
+          src='/assets/images/logo.svg' 
+          height={38} 
+          width={138} 
+          alt="logo"
+        />
+      </Link>
+      <p>2023 Evently. All Rights reserved.</p>
+    </footer>
+  )
+}
+
+export default Footer;
