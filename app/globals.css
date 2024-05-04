@@ -6,7 +6,7 @@
 
   }
 
-  @layer base {
+  @layer utilities {
     * {
       @apply border-border;
     }
@@ -19,4 +19,13 @@
     .wrapper{
       @apply max-w-7xl lg:mx-auto p-5 md:px-10 xl:px-0 w-full;
     }
+    .input {
+      @apply px-4 py-3 rounded-full h-[54px] bg-gray-50 placeholder:text-gray-500 
+          border-none focus-visible:ring-offset-0 focus-visible:ring-transparent !important
+    }
+    .textarea {
+      @apply px-5 py-3  bg-gray-50 placeholder:text-gray-500 
+        border-none focus-visible:ring-offset-0 focus-visible:ring-transparent !important
+    }
+
   }

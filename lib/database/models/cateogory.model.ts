@@ -1,6 +1,6 @@
 
 
-import mongoose, { Schema, model,Document } from 'mongoose';
+import { Schema, model,Document } from 'mongoose';
 import { models } from 'mongoose';
 
 export interface ICateogory extends Document {

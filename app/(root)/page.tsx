@@ -7,7 +7,7 @@ const HomePage = () => {
     <>
       <section className='  bg-dotted-pattern bg-cover '>
          <div className=' wrapper gap-6 xl:gap-0 grid grid-cols-1 md:grid-cols-2'>
-            <div className=" flex flex-col gap-8 ">
+            <div className=" flex flex-col justify-center gap-8 ">
               <h1 className=" flex-center font-bold text-[23px]">Host, Connect, 
                 Celebrate: Your Events, Our Platform!</h1>
               <p className="">Book and learn helpful

@@ -1,11 +1,22 @@
+import EventForm from '@/components/shared/EventForm';
+import { auth } from '@clerk/nextjs/server';
 import React from 'react'
 
 const CreateEvent = () => {
+  const {sessionClaims}=auth();
+
+  const userId=sessionClaims?.userId as string;
+
   return (
-    <div className=" wrapper py-6 xl:py-8">
-      
-    </div>
-  )
+    <>
+      <section className='wrapper'>
+        <h1 className=''>Create Event</h1>
+      </section>
+      <div className=' wrapper my-8'>
+        <EventForm type='Create' userId={userId} />
+      </div>
+    </>
+  ) 
 }
 
 export default CreateEvent;

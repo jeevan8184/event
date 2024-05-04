@@ -25,5 +25,5 @@ export const eventDefaultVals={
     isFree:false,
     location:'',
     url:'',
-    cateogory:''
+    cateogoryId:''
 }
