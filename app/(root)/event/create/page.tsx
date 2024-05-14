@@ -7,10 +7,12 @@ const CreateEvent = () => {
 
   const userId=sessionClaims?.userId as string;
 
+  console.log('sessionClaims',sessionClaims);
+
   return (
     <>
       <section className='wrapper'>
-        <h1 className=''>Create Event</h1>
+        <h1 className=' font-semibold px-5 text-2xl '>Create Event</h1>
       </section>
       <div className=' wrapper my-8'>
         <EventForm type='Create' userId={userId} />

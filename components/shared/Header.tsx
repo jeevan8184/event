@@ -13,7 +13,7 @@ const Header = () => {
   const router=useRouter();
   return (
     <header className=" flex-between wrapper px-5 bg-grey-50">
-       <div className=" flex-between gap-6 w-full">
+       <div className=" flex-between gap-6 w-full px-4">
           <Link href="/">
             <Image
                src="/assets/images/logo.svg" width={128} height={38} alt="image"

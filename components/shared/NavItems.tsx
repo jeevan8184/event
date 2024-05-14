@@ -6,7 +6,7 @@ import React from 'react'
 const NavItems = () => {
   const pathname=usePathname();
   return (
-    <div className=" flex flex-col flex-1 md:flex-row gap-5 max-sn:gap-3 max-w-sm ">
+    <div className=" flex flex-col flex-1 md:flex-row gap-5 max-sm:gap-3 max-w-sm ">
       {HomeCardLinks.map((item,i)=> {
         const isActive=item.route===pathname;
         return (
@@ -14,7 +14,7 @@ const NavItems = () => {
             href={item.route}
             key={i}
           >
-            {item.label}
+            <p className={`${isActive && 'underline border-b-blue-500 '} text-[17px] font-semibold` }>{item.label}</p>
           </Link>
         )
       })}

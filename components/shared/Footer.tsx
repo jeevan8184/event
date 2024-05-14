@@ -5,7 +5,7 @@ import React from 'react'
 const Footer = () => {
   return (
     <footer className=' wrapper flex flex-col flex-between 
-        items-center px-5 w-full py-5 sm:flex-row bg-grey-50 border-t border-t-slate-700' 
+        items-center px-5 w-full py-5 sm:flex-row bg-grey-50 border-t border-t-slate-600' 
     >
       <Link href='/'>
         <Image 
@@ -15,7 +15,9 @@ const Footer = () => {
           alt="logo"
         />
       </Link>
-      <p>2023 Evently. All Rights reserved.</p>
+      <p>2023 @copyright
+        <strong>Evently. All Rights reserved.</strong>
+      </p>
     </footer>
   )
 }

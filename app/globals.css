@@ -20,12 +20,21 @@
       @apply max-w-7xl lg:mx-auto p-5 md:px-10 xl:px-0 w-full;
     }
     .input {
-      @apply px-4 py-3 rounded-full h-[54px] bg-gray-50 placeholder:text-gray-500 
+      @apply px-4 py-3 rounded-full h-[50px] bg-gray-50 placeholder:text-gray-500 
           border-none focus-visible:ring-offset-0 focus-visible:ring-transparent !important
     }
     .textarea {
       @apply px-5 py-3  bg-gray-50 placeholder:text-gray-500 
         border-none focus-visible:ring-offset-0 focus-visible:ring-transparent !important
+    }
+    .cl-userButtonPopoverActionButtonIcon {
+      color: white;
+    }
+    .select {
+      @apply px-1 py-2 flex flex-col gap-1 bg-gray-50 rounded-xl border-none 
+    }
+    .select-item {
+      @apply font-semibold px-1 py-2 bg-gray-100 w-full rounded-xl hover:bg-slate-200 mb-1 cursor-pointer
     }
 
   }

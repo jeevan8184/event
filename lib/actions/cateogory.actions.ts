@@ -1,7 +1,8 @@
+"use server"
+
 import { connectToDB } from "../database";
 import Cateogory from "../database/models/cateogory.model";
 import { handleError } from "../utils"
-
 
 
 export const createCateogory=async({cateogoryName}:{cateogoryName:string})=> {

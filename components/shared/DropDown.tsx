@@ -1,3 +1,4 @@
+
 import React, { startTransition, useEffect,useState } from 'react'
 import {
   AlertDialog,
@@ -32,54 +33,56 @@ const DropDown = ({value,handleChange}:DropdownProps) => {
   const [cateogories, setCateogories] = useState<ICateogory[]>([]);
   const [newCateogory, setNewCateogory] = useState('');
 
-  // const handleAdd=async()=> {
+  const handleAdd=async()=> {
 
-  //   if(newCateogory.trim() !=='') {
-  //     const addedCat=await createCateogory({cateogoryName:newCateogory.trim()});
-  //     setCateogories((prev)=> [...prev,addedCat]);
-  //   }
-  // };
+    if(newCateogory.trim() !=='') {
+      const addedCat=await createCateogory({cateogoryName:newCateogory.trim()});
+      
+      setCateogories((prev)=> [...prev,addedCat]);
+    }
+  };
 
-  // useEffect(()=> {
-  //   const newFunc=async()=> {
-  //     const allCats=await getAllCateogorys();
-  //     allCats && setCateogories(allCats as ICateogory[]);
-  //   }
-  //   newFunc();
-  // },[]);
+  useEffect(()=> {
+    const newFunc=async()=> {
+      const allCats=await getAllCateogorys();
+      allCats && setCateogories(allCats as ICateogory[]);
+      console.log('cateogories',cateogories);
+    }
+    newFunc();
+  },[]);
   
 
   return (
     <Select onValueChange={handleChange} defaultValue={value}>
-      <SelectTrigger className="w-[180px]">
+      <SelectTrigger className="w-[400px] input">
         <SelectValue placeholder="cateogory" />
       </SelectTrigger>
-      <SelectContent>
+      <SelectContent className='select'>
         {cateogories.length>0 && cateogories.map((cateogory,i)=> (
-          <SelectItem value={cateogory._id} key={i}>
+          <SelectItem value={cateogory._id} key={i} className='select-item '>
             {cateogory.name}
           </SelectItem>
         ))}
-      <AlertDialog>
-        <AlertDialogTrigger>Add new cateogory</AlertDialogTrigger>
-        <AlertDialogContent className=" bg-white">
-          <AlertDialogHeader>
-            <AlertDialogTitle>New Cateogory</AlertDialogTitle>
-            <AlertDialogDescription>
-              <Input 
-                placeholder='eg:development'
-                value={newCateogory}
-                onChange={(e)=>setNewCateogory(e.target.value)}
-                className='input'
-              />
-            </AlertDialogDescription>
-          </AlertDialogHeader>
-          <AlertDialogFooter>
-            <AlertDialogCancel>Cancel</AlertDialogCancel>
-            <AlertDialogAction>Continue</AlertDialogAction>
-          </AlertDialogFooter>
-        </AlertDialogContent>
-      </AlertDialog>
+        <AlertDialog>
+          <AlertDialogTrigger className=' text-blue-500 select-item'>Add new cateogory</AlertDialogTrigger>
+          <AlertDialogContent className=" bg-white">
+            <AlertDialogHeader>
+              <AlertDialogTitle>New Cateogory</AlertDialogTitle>
+              <AlertDialogDescription>
+                <Input 
+                  placeholder='eg:development'
+                  value={newCateogory}
+                  onChange={(e)=>setNewCateogory(e.target.value)}
+                  className='input'
+                />
+              </AlertDialogDescription>
+            </AlertDialogHeader>
+            <AlertDialogFooter>
+              <AlertDialogCancel className=' rounded-full text-white bg-gray-500 border-none'>Cancel</AlertDialogCancel>
+              <AlertDialogAction onClick={()=> startTransition(handleAdd)} className=' rounded-full text-white bg-blue-500 border-none'>Continue</AlertDialogAction>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialog>
       </SelectContent>
     </Select>
 

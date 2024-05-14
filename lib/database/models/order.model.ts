@@ -28,10 +28,20 @@ export type IOrderItem ={
 
 const OrderSchema=new Schema({
     createdAt:{type:Date,default:Date.now},
-    stripeId:{type:String,unique:true,required:true},
+    stripeId:{
+        type:String,
+        unique:true,
+        required:true
+    },
     totalAmt:{type:String},
-    event:{type:Schema.Types.ObjectId,ref:'Event'},
-    buyer:{type:Schema.Types.ObjectId,ref:'User'}
+    event:{
+        type:Schema.Types.ObjectId,
+        ref:'Event'
+    },
+    buyer:{
+        type:Schema.Types.ObjectId,
+        ref:'User'
+    }
 })
 
 const Order=models.Order || model('Order',OrderSchema);

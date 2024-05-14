@@ -30,8 +30,14 @@ const EventSchema=new Schema({
     location:{type:String},
     createdAt:{type:Date,default:Date.now},
     url:{type:String},
-    cateogory:{type:Schema.Types.ObjectId,ref:'Cateogory'},
-    organizer:{type:Schema.Types.ObjectId,ref:'User'},
+    cateogory:{
+        type:Schema.Types.ObjectId,
+        ref:'Cateogory'
+    },
+    organizer:{
+        type:Schema.Types.ObjectId,
+        ref:'User'
+    },
 })
 
 const Event=models.Event || model('Event',EventSchema);

@@ -20,6 +20,9 @@ import FileUploader from "./FileUploader"
 import { useRouter } from "next/navigation"
 import Image from "next/image"
 import { Checkbox } from "../ui/checkbox"
+import { useUploadThing } from "@/lib/uploadthing"
+import { handleError } from "@/lib/utils"
+import { createEvent, updateEvent } from "@/lib/actions/event.actions"
 
 interface EventProps {
     userId:string,
@@ -33,16 +36,56 @@ const EventForm = ({userId,type,event,eventId}:EventProps) => {
   const initialValues=eventDefaultVals;
   const router=useRouter();
   const [files, setFiles] = useState<File[]>([]);
+  const {startUpload}=useUploadThing('imageUploader');
 
     const form = useForm<z.infer<typeof eventFormSchema>>({
         resolver: zodResolver(eventFormSchema),
         defaultValues: initialValues
       })
      
-      function onSubmit(values: z.infer<typeof eventFormSchema>) {
+    async function onSubmit(values: z.infer<typeof eventFormSchema>) {
         console.log("values",values);
-      }
-       
+
+        let userImage=values.imageUrl;
+
+        if(files.length>0) {
+          const imgRes=await startUpload(files);
+          console.log('imgRes',imgRes);
+
+          if(!imgRes) return;
+
+          userImage=imgRes[0]?.url;
+        }
+
+        if(type==='Create') {
+          try {
+            const event=await createEvent({
+              userId,
+              event:{...values,imageUrl:userImage,categoryId:values.cateogoryId},
+              path:'/profile'
+            })
+            router.push(`/event/${event._id}`)
+          } catch (error) {
+            console.log(error);
+            handleError(error);
+          }
+        }
+        if(type==='Update') {
+          try {
+            const event=await updateEvent({
+              userId,
+              event:{...values,imageUrl:userImage,categoryId:values.cateogoryId,_id:eventId!},
+              path:'/profile'
+            })
+            router.push(`/event/${event._id}`);
+            
+          } catch (error) {
+            console.log(error);
+            handleError(error);
+          }
+        }
+    }
+      
 
   return (
     <Form {...form}>
@@ -78,15 +121,15 @@ const EventForm = ({userId,type,event,eventId}:EventProps) => {
           )}
         />
       </div>
-      <div className=" flex flex-col gap-4 md:flex-row ">
+      <div className=" flex flex-col gap-4 md:flex-row mb-5 ">
         <FormField
           control={form.control}
           name="description"
           render={({ field }) => (
-            <FormItem className=" w-full h-72">
+            <FormItem className=" w-full h-72 mb-4">
               <FormLabel className="mx-4 text-[18px] font-semibold">description</FormLabel>
               <FormControl>
-                <Textarea placeholder="description.." {...field} className=" textarea" />
+                <Textarea placeholder="description.." {...field} className=" textarea h-full" />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -96,7 +139,7 @@ const EventForm = ({userId,type,event,eventId}:EventProps) => {
           control={form.control}
           name="imageUrl"
           render={({ field }) => (
-            <FormItem className=" w-full">
+            <FormItem className=" w-full h-72">
               <FormLabel className="mx-4 text-[18px] font-semibold">Drop Your photo here</FormLabel>
               <FormControl>
                 <FileUploader 
@@ -118,7 +161,7 @@ const EventForm = ({userId,type,event,eventId}:EventProps) => {
             <FormItem className=" w-full">
               <FormLabel className="mx-4 text-[18px] font-semibold">Add Your location</FormLabel>
               <FormControl>
-                <div className=" flex-center h-[54px] bg-gray-50 px-4 py-3 overflow-hidden rounded-full ">
+                <div className=" flex-center h-[50px] bg-gray-50 px-4 py-3 overflow-hidden rounded-full ">
                   <Image
                     src='/assets/icons/location-grey.svg'
                     alt="location"
@@ -142,7 +185,7 @@ const EventForm = ({userId,type,event,eventId}:EventProps) => {
             <FormItem className=" w-full">
               <FormLabel className="mx-4 text-[18px] font-semibold">Select start Datetime</FormLabel>
               <FormControl>
-              <div className=" flex-center h-[54px] gap-2 rounded-full px-5 py-3 bg-gray-50 overflow-hidden ">
+                <div className=" flex-center h-[50px] gap-2 rounded-full px-5 py-3 bg-gray-50 overflow-hidden ">
                   <Image
                     src='/assets/icons/calendar.svg'
                     alt="calendar"
@@ -171,7 +214,7 @@ const EventForm = ({userId,type,event,eventId}:EventProps) => {
             <FormItem className="w-full">
               <FormLabel className="mx-4 text-[18px] font-semibold">Select End Datetime</FormLabel>
               <FormControl>
-                <div className=" flex-center h-[54px] gap-2 rounded-full px-5 py-3 bg-gray-50 overflow-hidden ">
+                <div className=" flex-center h-[50px] gap-2 rounded-full px-5 py-3 bg-gray-50 overflow-hidden ">
                   <Image
                     src='/assets/icons/calendar.svg'
                     alt="calendar"
@@ -202,7 +245,7 @@ const EventForm = ({userId,type,event,eventId}:EventProps) => {
             <FormItem className=" w-full">
               <FormLabel className="mx-4 text-[18px] font-semibold">Add price</FormLabel>
               <FormControl>
-                <div className=" flex-center h-[54px] bg-gray-50 px-4 py-3 overflow-hidden rounded-full ">
+                <div className=" flex-center h-[50px] bg-gray-50 px-4 py-3 overflow-hidden rounded-full ">
                   <Image
                     src='/assets/icons/dollar.svg'
                     alt="location"
@@ -267,7 +310,7 @@ const EventForm = ({userId,type,event,eventId}:EventProps) => {
           className=" rounded-full px-6 text-white"
           disabled={form.formState.isSubmitting}
           >
-            {form.formState.isSubmitting ? 'submitting' : `${type} Event`}
+            {form.formState.isSubmitting ? `${type}ing Event` : `${type} Event`}
         </Button>
       </div>
     </form>
