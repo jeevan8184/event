@@ -23,11 +23,11 @@ export default function RootLayout({
         logoImageUrl: "/icons/yoom-logo.svg",
       },
       variables: {
-        colorText: "#fff",
-        colorPrimary: "#0E78F9",
-        colorBackground: "#1C1F2E",
-        colorInputBackground: "#252A41",
-        colorInputText: "#fff",
+        // colorText: "#fff",
+        // colorPrimary: "#0E78F9",
+        // colorBackground: "#1C1F2E",
+        // colorInputBackground: "#252A41",
+        // colorInputText: "white",
       },
     }}>
         <html lang="en">

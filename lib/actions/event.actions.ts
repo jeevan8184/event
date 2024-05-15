@@ -26,7 +26,7 @@ const populateEvent=(query:any)=> {
         .populate({path:'organizer',model:User,select:'_id firstName lastName'})
         .populate({path:'cateogory',model:Cateogory,select:'_id name'})
 
-}
+} 
 
 export const createEvent=async({userId,event,path}:CreateEventParams)=>{
 
@@ -71,7 +71,9 @@ export const getEventById=async(eventId:string)=> {
     try {
         await connectToDB();
 
-        const event=await populateEvent(Event.findById(eventId));
+        const event=await Event.findById(eventId)
+        .populate({path:'organizer',model:User,select:'_id firstName lastName'})
+        .populate({path:'cateogory',model:Cateogory,select:'_id name'})
 
         if(!event) throw new Error('event not found with eventId');
 
@@ -93,7 +95,7 @@ export const deleteEvent=async({eventId,path}:DeleteEventParams)=> {
     }
 }
 
-export const getAllEvents=async({query,category,limit=4,page=1}:GetAllEventsParams)=> {
+export const getAllEvents=async({query,category,limit=3,page=1}:GetAllEventsParams)=> {
 
     try {
         await connectToDB();
@@ -110,10 +112,12 @@ export const getAllEvents=async({query,category,limit=4,page=1}:GetAllEventsPara
             .sort({createdAt:'desc'})
             .skip(skipAmt)
             .limit(limit)
-            .exec()
+            .populate({path:'organizer',model:User,select:'_id firstName lastName'})
+            .populate({path:'cateogory',model:Cateogory,select:'_id name'})
+            
         
         const allDocs=await Event.countDocuments(conditions);
-        const events=await populateEvent(queryEVents);
+        const events=await queryEVents.exec();
 
         return {
             data:JSON.parse(JSON.stringify(events)),
@@ -125,7 +129,7 @@ export const getAllEvents=async({query,category,limit=4,page=1}:GetAllEventsPara
     }
 }
 
-export const getEventsByUser=async({userId,limit=4,page=1}:GetEventsByUserParams)=> {
+export const getEventsByUser=async({userId,limit=3,page=1}:GetEventsByUserParams)=> {
 
     try {
         await connectToDB();
@@ -136,9 +140,10 @@ export const getEventsByUser=async({userId,limit=4,page=1}:GetEventsByUserParams
             .sort({createdAt:'desc'})
             .skip(skipAmt)
             .limit(limit)
-            .exec()
+            .populate({path:'organizer',model:User,select:'_id firstName lastName'})
+            .populate({path:'cateogory',model:Cateogory,select:'_id name'})
         
-        const events=await populateEvent(queryEVents);
+        const events=await queryEVents.exec();
         const allDocs=await Event.countDocuments({organizer:{$in:userId}});
 
         return {
@@ -151,7 +156,7 @@ export const getEventsByUser=async({userId,limit=4,page=1}:GetEventsByUserParams
     }
 }
 
-export const getRelatedEventsByCategory=async({eventId,categoryId,limit=4,page=1}:GetRelatedEventsByCategoryParams)=> {
+export const getRelatedEventsByCategory=async({eventId,categoryId,limit=3,page=1}:GetRelatedEventsByCategoryParams)=> {
 
     try {
         await connectToDB();
@@ -163,9 +168,11 @@ export const getRelatedEventsByCategory=async({eventId,categoryId,limit=4,page=1
             .sort({createdAt:'desc'})
             .skip(skipAmt)
             .limit(limit)
-            .exec()
+            .populate({path:'organizer',model:User,select:'_id firstName lastName'})
+            .populate({path:'cateogory',model:Cateogory,select:'_id name'})
+            
         
-        const events=await populateEvent(queryEVents);
+        const events=await queryEVents.exec();
         const allDocs=await Event.countDocuments(query);
 
         return {
@@ -174,6 +181,7 @@ export const getRelatedEventsByCategory=async({eventId,categoryId,limit=4,page=1
         }
         
     } catch (error) {
+        console.log(error);
         handleError(error);
     }
 }

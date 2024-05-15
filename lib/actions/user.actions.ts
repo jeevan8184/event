@@ -10,7 +10,8 @@ import Order from '../database/models/order.model';
 import { revalidatePath } from 'next/cache';
 
 export const createUser=async(user:CreateUserParams)=>{
-
+    console.log('user',user);
+    
     try {
         await connectToDB();
         const newUser=await User.create(user);
@@ -48,6 +49,21 @@ export const getUserById=async(userId:string)=> {
         handleError(error);
     }
 }
+
+export const getUserByClerkId=async(clerkId:string)=> {
+
+    try {
+        await connectToDB();
+        const existUser=await User.findOne({clerkId});
+
+        if(!existUser) throw new Error('user not found with id');
+
+        return JSON.parse(JSON.stringify(existUser));
+    } catch (error) {
+        handleError(error);
+    }
+}
+
 
 export const deleteUser=async(clerkId:string)=> {
 

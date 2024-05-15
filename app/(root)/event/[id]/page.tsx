@@ -1,12 +1,22 @@
-import { getEventById } from '@/lib/actions/event.actions'
+import Collection from '@/components/shared/Collection';
+import { getEventById, getRelatedEventsByCategory } from '@/lib/actions/event.actions'
 import { formatDateTime } from '@/lib/utils';
+import { SearchParamProps } from '@/types';
 import Image from 'next/image';
 import React from 'react'
 
-const page =async ({params}:{params:{id:string}}) => {
+const page =async ({params:{id},searchParams}:SearchParamProps) => {
 
-    const event=await getEventById(params.id);
-    // console.log('event',event);
+    const event=await getEventById(id);
+
+    const relatedEvets=await getRelatedEventsByCategory({
+        eventId:event._id,
+        limit:3,
+        page:searchParams?.page as string ,
+        categoryId:event.cateogory._id
+    })
+
+    
   return (
     <>
         <section className='wrapper flex-center px-4 py-5 bg-primary-50 bg-dotted-pattern bg-contain'>
@@ -59,6 +69,18 @@ const page =async ({params}:{params:{id:string}}) => {
                     </div>
                 </div>
             </div>
+        </section>
+        <section className=' wrapper flex flex-col gap-4  my-4'>
+            <h2 className=' font-semibold text-xl'>Related Events</h2>
+
+            <Collection 
+                data={relatedEvets?.data}
+                collectionType='All_events'
+                totalPages={relatedEvets?.totalPages}
+                limit={4}
+                page={searchParams.page as string}
+                subTitle='No related Events found.'
+            />
         </section>
     </>
     

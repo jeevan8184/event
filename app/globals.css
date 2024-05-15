@@ -36,5 +36,11 @@
     .select-item {
       @apply font-semibold px-1 py-2 bg-gray-100 w-full rounded-xl hover:bg-slate-200 mb-1 cursor-pointer
     }
+    .cancel {
+      @apply rounded-full text-white bg-gray-500 border-none
+    }
+    .continue{
+      @apply rounded-full text-white bg-blue-500 border-none
+    }
 
   }

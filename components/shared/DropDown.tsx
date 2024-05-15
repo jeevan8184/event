@@ -78,8 +78,8 @@ const DropDown = ({value,handleChange}:DropdownProps) => {
               </AlertDialogDescription>
             </AlertDialogHeader>
             <AlertDialogFooter>
-              <AlertDialogCancel className=' rounded-full text-white bg-gray-500 border-none'>Cancel</AlertDialogCancel>
-              <AlertDialogAction onClick={()=> startTransition(handleAdd)} className=' rounded-full text-white bg-blue-500 border-none'>Continue</AlertDialogAction>
+              <AlertDialogCancel className=' cancel'>Cancel</AlertDialogCancel>
+              <AlertDialogAction onClick={()=> startTransition(handleAdd)} className='continue '>Continue</AlertDialogAction>
             </AlertDialogFooter>
           </AlertDialogContent>
         </AlertDialog>

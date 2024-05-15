@@ -33,7 +33,15 @@ interface EventProps {
 
 const EventForm = ({userId,type,event,eventId}:EventProps) => {
 
-  const initialValues=eventDefaultVals;
+  const initialValues=event && type==='Update' ? 
+      {...event,
+        startDateTime:new Date(event.startDateTime),
+        endDateTime:new Date(event.endDateTime),
+        cateogoryId:event.cateogory._id
+      }
+      : eventDefaultVals
+      
+
   const router=useRouter();
   const [files, setFiles] = useState<File[]>([]);
   const {startUpload}=useUploadThing('imageUploader');
@@ -131,7 +139,7 @@ const EventForm = ({userId,type,event,eventId}:EventProps) => {
               <FormControl>
                 <Textarea placeholder="description.." {...field} className=" textarea h-full" />
               </FormControl>
-              <FormMessage />
+              <FormMessage className=" my-2 text-red-500 " />
             </FormItem>
           )}
         />
@@ -284,7 +292,7 @@ const EventForm = ({userId,type,event,eventId}:EventProps) => {
           name="url"
           render={({ field }) => (
             <FormItem className=" w-full">
-              <FormLabel className="mx-4 text-[18px] font-semibold">description</FormLabel>
+              <FormLabel className="mx-4 text-[18px] font-semibold">URL</FormLabel>
               <FormControl>
                 <Input placeholder="URL.." {...field} className=" input" />
               </FormControl>

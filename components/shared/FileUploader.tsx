@@ -29,7 +29,7 @@ const FileUploader = ({imageUrl,handleChange,setFiles}:FileProps) => {
   return (
       <div 
         {...getRootProps()}
-        className=' bg-gray-50 cursor-pointer flex-center flex-col overflow-hidden h-72 bg-dark-3 rounded-xl '
+        className=' bg-gray-50 cursor-pointer flex-center flex-col overflow-hidden h-72 bg-dark-3 rounded-2xl '
       >
         <input {...getInputProps()} />
         {imageUrl ? (
